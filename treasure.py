@@ -1,16 +1,21 @@
 def do_treasure():
     clear()
     set_farm_size(0)
-    ensure_tilled()
-    do_once = True
-    while do_once or num_items(Items.Pumpkin) > 10000:
-        do_once = False
-        plant(Entities.Bush)
+    while True:
+        if buy_until_target(Items.Fertilizer, 50) == False:
+            return
+        
+        if num_items(Items.Gold) > 5000:
+            return 
+        
+        ensure_tilled()
         ensure_watered()
+        plant(Entities.Bush)
         while get_entity_type() != Entities.Treasure and get_entity_type() != Entities.Hedge:
             use_item(Items.Fertilizer)
             if num_items(Items.Fertilizer) == 0:
-                buy_until_target(Items.Fertilizer, 50)
+                if buy_until_target(Items.Fertilizer, 50) == False:
+                    return
 
         # do_a_flip()
         follow_left_wall()

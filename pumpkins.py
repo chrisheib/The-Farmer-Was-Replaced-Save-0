@@ -4,6 +4,9 @@ def do_max_pumpkins():
     while 1:
         if buy_until_target(Items.Pumpkin_Seed, 500) == False:
             return
+        
+        if num_items(Items.Pumpkin) > 50000:
+            return 
 
         # plant all
 
@@ -20,17 +23,36 @@ def do_max_pumpkins():
                 move(North)
             move(East)
 
-        ready_to_harvest = False
-        while ready_to_harvest == False:
-            ready_to_harvest = True
-            for x in range(get_world_size()):
-                for y in range(get_world_size()):
-                    if get_entity_type() == None:
-                        ready_to_harvest = False
-                        ensure_tilled()
-                        ensure_watered()
-                        plant(Entities.Pumpkin)
-                    move(North)
-                move(East)
+        ready_to_harvest = True
+        candidates = []
+        for x in range(get_world_size()):
+            for y in range(get_world_size()):
+                if get_entity_type() == None:
+                    ready_to_harvest = False
+                    ensure_tilled()
+                    ensure_watered()
+                    plant(Entities.Pumpkin)
+                    c = get_pos_x(), get_pos_y()
+                    candidates.append(c)
+                move(North)
+            move(East)
+
+        while len(candidates) > 0:
+            for c in candidates:
+                x, y = c
+                move_to(x, y)
+                if get_entity_type() == Entities.Pumpkin:
+                    if can_harvest():
+                        candidates.remove(c)
+                        quick_print(candidates)
+                    else:
+                        if len(candidates) == 1:
+                            use_item(Items.Fertilizer)
+                else: 
+                    ensure_tilled()
+                    ensure_watered()
+                    plant(Entities.Pumpkin)
+
+
         move_home()
         harvest()

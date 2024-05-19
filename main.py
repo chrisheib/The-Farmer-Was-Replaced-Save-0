@@ -4,11 +4,11 @@ clear()
 
 while 1:
     # set_execution_speed(0.2)
-    do_trade()
-    do_farm_power()
-    # do_treasure()
+    # do_trade()
     do_farm()
+    do_farm_power()
     do_max_pumpkins()
+    do_treasure()
     do_cacti()
     do_dinos()
 
@@ -21,8 +21,9 @@ def do_farm():
     set_farm_size(0)
     move_home()
 
-    for i in range(10): 
-        do_trade()
+    while num_items(Items.Carrot) < 20000: 
+        buy_until_target(Items.Carrot_Seed, 150)
+        # do_trade()
         # if num_items(Items.Cactus_Seed) >= 5:
         #     do_cactus_cols_simple()
         # else:
@@ -33,7 +34,6 @@ def do_farm():
         decide_growth()
         while get_pos_x() > 0:
             decide_growth()
-        quick_print(i)
 
 def decide_growth():
     # if num_items(Items.Carrot) < 5000:

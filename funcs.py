@@ -95,21 +95,6 @@ def do_carrot_col():
         move(North)
     move(East)
 
-def check_swap_cactus_correct():
-    me = measure()
-    if me > measure(North): 
-        swap(North)
-        return False
-    if me > measure(East):
-        swap(East)
-        return False
-    if me < measure(South): 
-        swap(South)
-        return False
-    if me < measure(West):
-        swap(West)
-        return False
-    return True
 
 def ensure_watered():
     water = get_water()

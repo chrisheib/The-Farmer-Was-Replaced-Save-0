@@ -1,5 +1,7 @@
 def do_farm_power():
     power_target = 10000
+    if buy_until_target(Items.Sunflower_Seed, 50) == False:
+        return
     if num_items(Items.Power) > power_target:
         return 
     clear()
