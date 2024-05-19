@@ -1,4 +1,9 @@
 def do_dinos():
+    if num_unlocked(Items.Egg) < 1:
+        return
+    if num_unlocked(Unlocks.Leaderboard) > 0:
+        return
+    
     set_farm_size(4)
     
     while 1:

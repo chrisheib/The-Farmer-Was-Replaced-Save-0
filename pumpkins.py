@@ -2,10 +2,10 @@ def do_max_pumpkins():
     set_farm_size(0)
 
     while 1:
-        if buy_until_target(Items.Pumpkin_Seed, 500) == False:
+        if buy_until_target(Items.Pumpkin_Seed, get_world_size() * get_world_size() * 2) == False:
             return
         
-        if num_items(Items.Pumpkin) > 50000:
+        if num_items(Items.Pumpkin) > get_amounts():
             return 
 
         # plant all
@@ -47,7 +47,7 @@ def do_max_pumpkins():
                         quick_print(candidates)
                     else:
                         if len(candidates) == 1:
-                            use_item(Items.Fertilizer)
+                            try_fertilize()
                 else: 
                     ensure_tilled()
                     ensure_watered()

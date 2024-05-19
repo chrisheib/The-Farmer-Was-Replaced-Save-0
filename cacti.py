@@ -1,4 +1,6 @@
 def do_cacti():
+    if num_unlocked(Items.Cactus) < 1:
+        return
     set_farm_size(0)
     
     while 1:

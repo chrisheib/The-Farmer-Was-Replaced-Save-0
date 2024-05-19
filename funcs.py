@@ -1,32 +1,33 @@
 
-def do_trade():
-    buy_until_target(Items.Carrot_Seed, 150)
-    buy_until_target(Items.Pumpkin_Seed, 150)
-    buy_until_target(Items.Cactus_Seed, 10) # Gold: 10
-    buy_until_target(Items.Sunflower_Seed, 150)
-    buy_until_target(Items.Fertilizer, 50)
-    buy_until_target(Items.Egg, 50)
+def buy_tanks():
+    # buy_until_target(Items.Carrot_Seed, 150)
+    # buy_until_target(Items.Pumpkin_Seed, 150)
+    # buy_until_target(Items.Cactus_Seed, 10) # Gold: 10
+    # buy_until_target(Items.Sunflower_Seed, 150)
+    # buy_until_target(Items.Fertilizer, 50)
+    # buy_until_target(Items.Egg, 50)
     tanks = num_items(Items.Water_Tank) + num_items(Items.Empty_Tank)
-    if num_items(Items.Water_Tank) + num_items(Items.Empty_Tank) < 5000:
-        trade(Items.Empty_Tank, 5000 - tanks)
-    # sell_excess(Items.Hay, 5000)
-    # sell_excess(Items.Wood, 5000)
-    # sell_excess(Items.Carrot, 5000)
-    # sell_excess(Items.Hay, 5000)
-
-def sell_excess(item, target_qty):
-    qty = num_items(item)
-    if qty > target_qty:
-        trade(item, qty - target_qty)
+    while tanks < get_amounts():
+        if trade(Items.Empty_Tank, 100) == False:
+            break
 
 def buy_until_target(item, target_qty):
     qty = num_items(item)
     if qty < target_qty:
-        if trade(item, target_qty - qty) == False:
-            quick_print(get_cost(item))
-            return False
+        if num_unlocked(Unlocks.Multi_Trade) > 1:
+            if trade(item, target_qty - qty) == False:
+                quick_print(get_cost(item))
+                return False
+        else: 
+            while num_items(item) < target_qty:
+                if trade(item) == False:
+                    return False
     else:
         return True
+    
+def try_fertilize():
+    if num_unlocked(Items.Fertilizer) > 0:
+        use_item(Items.Fertilizer)
 
 def ensure_tilled():
     if get_ground_type() != Grounds.Soil:
@@ -46,17 +47,20 @@ def do_grass_col():
     move(East)
 
 def do_wood_col():
-    even = get_pos_x() % 2
-    for y in range(get_world_size()):
-        ensure_watered()
-        if can_harvest(): 
-            harvest()
-            ensure_tilled()
-            if y % 2 == even:
-                plant(Entities.Tree)
+    if num_unlocked(Unlocks.Trees) < 1:
+        do_bush_col()
+    else:
+        even = get_pos_x() % 2
+        for y in range(get_world_size()):
+            ensure_watered()
+            if can_harvest(): 
+                harvest()
+                ensure_tilled()
+                if y % 2 == even:
+                    plant(Entities.Tree)
 
-        move(North)
-    move(East)
+            move(North)
+        move(East)
 
 def do_bush_col():
     for y in range(get_world_size()):

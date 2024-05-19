@@ -1,18 +1,21 @@
 def do_treasure():
+    if num_unlocked(Items.Fertilizer) < 1:
+        return
+    
     clear()
     set_farm_size(0)
     while True:
         if buy_until_target(Items.Fertilizer, 50) == False:
             return
         
-        if num_items(Items.Gold) > 5000:
+        if num_items(Items.Gold) > get_amounts():
             return 
         
         ensure_tilled()
         ensure_watered()
         plant(Entities.Bush)
         while get_entity_type() != Entities.Treasure and get_entity_type() != Entities.Hedge:
-            use_item(Items.Fertilizer)
+            try_fertilize()
             if num_items(Items.Fertilizer) == 0:
                 if buy_until_target(Items.Fertilizer, 50) == False:
                     return
