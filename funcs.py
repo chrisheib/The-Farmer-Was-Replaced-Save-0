@@ -43,8 +43,10 @@ def do_grass_col():
         ensure_untilled()
         if can_harvest(): 
             harvest()
-        move(North)
-    move(East)
+        if get_world_size() > 1:
+            move(North)
+    if get_world_size() > 1:
+        move(East)
 
 def do_wood_col():
     if num_unlocked(Unlocks.Trees) < 1:

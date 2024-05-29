@@ -23,12 +23,12 @@ def do_max_pumpkins():
                 move(North)
             move(East)
 
-        ready_to_harvest = True
+        # ready_to_harvest = True
         candidates = []
         for x in range(get_world_size()):
             for y in range(get_world_size()):
                 if get_entity_type() == None:
-                    ready_to_harvest = False
+                    # ready_to_harvest = False
                     ensure_tilled()
                     ensure_watered()
                     plant(Entities.Pumpkin)
@@ -44,7 +44,7 @@ def do_max_pumpkins():
                 if get_entity_type() == Entities.Pumpkin:
                     if can_harvest():
                         candidates.remove(c)
-                        quick_print(candidates)
+                        # quick_print(candidates)
                     else:
                         if len(candidates) == 1:
                             try_fertilize()

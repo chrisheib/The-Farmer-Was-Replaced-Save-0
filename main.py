@@ -1,5 +1,10 @@
-clear()
+# clear()
+# quick_print(get_op_count())
+# do_unlocks()
+# quick_print(get_op_count())
+
 timed_reset()
+# reset()
 
 # quick_print(get_cost(Unlocks.Dinosaurs))
 
